@@ -39,7 +39,7 @@ class ContactDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        receiveData = arguments?.getParcelable<MyItem>("EXTRA_USER")
+        receiveData = arguments?.getParcelable<MyItem>(Key.EXTRA_USER)
         binding.userImage.setImageURI(receiveData?.icon)
         binding.userName.text = receiveData?.name
         val formattedPhoneNum = StringBuilder(receiveData?.phoneNum)
@@ -97,7 +97,7 @@ class ContactDetailFragment : Fragment() {
         fun newInstance(myItem: MyItem) =
             ContactDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable("EXTRA_USER", myItem)
+                    putParcelable(Key.EXTRA_USER, myItem)
                 }
             }
     }
@@ -114,7 +114,7 @@ class ContactDetailFragment : Fragment() {
     private fun sendNotification(timeInMillis: Long) {
         val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val notificationIntent = Intent(requireContext(), MyAlarmReceiver::class.java).apply {
-            putExtra("MY_ITEM",receiveData)
+            putExtra(Key.MY_ITEM,receiveData)
         }
         val pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 

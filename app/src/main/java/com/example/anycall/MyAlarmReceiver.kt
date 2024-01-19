@@ -49,7 +49,7 @@ class MyAlarmReceiver : BroadcastReceiver(){
             // 26 버전 이하
             builder = NotificationCompat.Builder(context)
         }
-        val myItem = intent.getParcelableExtra<MyItem>("MY_ITEM")
+        val myItem = intent.getParcelableExtra<MyItem>(Key.MY_ITEM)
         // 알림의 기본 정보
         builder.run {
             setSmallIcon(R.drawable.call)

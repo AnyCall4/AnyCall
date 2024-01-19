@@ -71,10 +71,6 @@ class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapte
 
     }
 
-    /*override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return Holder(binding)
-    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -113,13 +109,13 @@ class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapte
         holder.name.text = mItems[position].name
         holder.itemView.setOnLongClickListener {
             AlertDialog.Builder(it.context)
-                .setTitle("삭제 확인")
+                .setTitle(R.string.recycler_adapter_item_delete_title)
                 .setMessage("${mItems[position].name} 연락처를 삭제하시겠습니까?")
-                .setPositiveButton("예") { _, _ ->
+                .setPositiveButton(R.string.recycler_adapter_item_yes) { _, _ ->
                     mItems.removeAt(position)
                     notifyItemRemoved(position)
                 }
-                .setNegativeButton("아니오", null)
+                .setNegativeButton(R.string.recycler_adapter_item_no, null)
                 .show()
             return@setOnLongClickListener true
         }
@@ -132,12 +128,6 @@ class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapte
     override fun getItemCount(): Int {
         return mItems.size
     }
-
-    /*inner class Holder(val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        val iconImageView = binding.itemImage
-        val name = binding.itemName
-        val like = binding.likeImage
-    }*/
 
     inner class Holder(private val binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
         val iconImageView = when (binding) {

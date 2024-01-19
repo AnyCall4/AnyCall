@@ -129,14 +129,11 @@ class ContactsFragment : Fragment(), ContactDetailFragment.OnFavoriteChangedList
                     cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
                 val phoneNumberColumnIndex =
                     cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-//                val contactIdColumnIndex =
-//                    cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID)
                 val contactIdColumnIndex =
                     cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.RAW_CONTACT_ID)
                 if (nameColumnIndex >= 0 && phoneNumberColumnIndex >= 0 && contactIdColumnIndex >= 0) {
                     val name = cursor.getString(nameColumnIndex)
                     val phoneNumber = cursor.getString(phoneNumberColumnIndex)
-//                    val contactId = cursor.getLong(contactIdColumnIndex)
                     val rawContactId = cursor.getLong(contactIdColumnIndex)
 
                     // 여기서 필요한 데이터를 가져와서 MyItem 객체를 생성하여 dataList에 추가
@@ -185,14 +182,10 @@ class ContactsFragment : Fragment(), ContactDetailFragment.OnFavoriteChangedList
     }
 
     private fun getContactPhotoUri(rawContactId: Long): Uri? {
-        Log.d("ContactsFragment", "getContactPhotoUri called")
-
         val photoUri = ContentUris.withAppendedId(
             ContactsContract.Contacts.CONTENT_URI,
             rawContactId
         )
-        Log.d("ContactsFragment", "Photo URI: $photoUri")
-
         val inputStream: InputStream? =
             ContactsContract.Contacts.openContactPhotoInputStream(
                 requireActivity().contentResolver,
@@ -202,20 +195,15 @@ class ContactsFragment : Fragment(), ContactDetailFragment.OnFavoriteChangedList
         val result: Uri? = if (inputStream != null) {
             val bitmap = BitmapFactory.decodeStream(inputStream)
             inputStream.close()
-            Log.d("ContactsFragment", "Bitmap decoded successfully")
             saveImageToInternalStorage(bitmap, rawContactId.toString()) // 저장된 파일의 Uri를 반환
         } else {
             // 연락처에 사진이 없을 경우
-            Log.d("ContactsFragment", "No contact photo found, using default URI")
             Uri.parse("android.resource://com.example.anycall/drawable/user")
         }
-
-        Log.d("ContactsFragment", "가져온 사진: $result")
         return result
     }
 
     private fun saveImageToInternalStorage(bitmap: Bitmap, fileName: String): Uri? {
-        Log.d("ContactsFragment", "saveImageToInternalStorage called")
         // 내부 저장소에 이미지를 저장하고 해당 파일의 Uri를 반환합니다.
         val wrapper = ContextWrapper(requireContext())
         var file = wrapper.getDir("images", Context.MODE_PRIVATE)
@@ -229,7 +217,6 @@ class ContactsFragment : Fragment(), ContactDetailFragment.OnFavoriteChangedList
             return Uri.parse(file.absolutePath)
         } catch (e: IOException) {
             e.printStackTrace()
-            Log.e("ContactsFragment", "Failed to save image to internal storage: ${e.message}")
         }
         // 이미지 저장에 실패한 경우 null을 반환
         return null
@@ -361,11 +348,11 @@ class ContactsFragment : Fragment(), ContactDetailFragment.OnFavoriteChangedList
                     val email = dialogView.addUserEmail.text.toString().trim()
                     val newItem: MyItem
                     if (name.isBlank() || phone.isBlank()) {
-                        Toast.makeText(requireContext(), "이름과 번호는 꼭 입력해주세요.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), R.string.contacts_valid_empty, Toast.LENGTH_SHORT).show()
                         return@OnClickListener
                     }
                     if(phone.length != 11 || phone.contains("-")){
-                        Toast.makeText(requireContext(), "-를 제외한 11자리를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), R.string.contacts_valid_length, Toast.LENGTH_SHORT).show()
                         return@OnClickListener
                     }
                     if (isImageSelected) {
@@ -433,16 +420,6 @@ class ContactsFragment : Fragment(), ContactDetailFragment.OnFavoriteChangedList
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ContactsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 
     override fun onFavoriteChanged(item: MyItem) {
         adapter.notifyDataSetChanged()

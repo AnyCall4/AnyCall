@@ -54,14 +54,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/pyeongchangpeacebold"
+                tools:text="@string/fragment_contact_detail_name"
                 android:textColor="@color/black"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/user_image"
-                tools:text="@string/fragment_contact_detail_name" />
+                app:layout_constraintTop_toBottomOf="@id/user_image" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/const_message"
@@ -81,12 +81,12 @@
                     android:layout_margin="15dp"
                     android:fontFamily="@font/bmjua"
                     android:gravity="center"
+                    tools:text="@string/fragment_contact_detail_comment"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/fragment_contact_detail_comment" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -172,9 +172,9 @@
                 android:background="@drawable/bg_mypage_info_line"
                 android:fontFamily="@font/bmjua"
                 android:gravity="center"
-                android:text="@string/fragment_contact_detail_event_5"
                 android:textColor="@color/black"
                 android:textSize="22sp"
+                android:text="@string/fragment_contact_detail_event_5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt_event" />
 
@@ -227,9 +227,9 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:backgroundTint="@color/starColor"
-            android:fontFamily="@font/bmjua"
             android:text="@string/fragment_contact_detail_button_call"
             android:textSize="19sp"
+            android:fontFamily="@font/bmjua"
             app:layout_constraintBottom_toBottomOf="@id/btn_message"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

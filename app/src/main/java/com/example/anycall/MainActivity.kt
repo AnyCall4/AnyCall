@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val tabTextList = listOf("CONTACT", "MY PAGE")
+    private val tabTextList = listOf(R.string.main_list_first, R.string.main_list_second)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private fun initViewPager() {
         binding.viewpager2.adapter = ViewPagerAdapter(this)
         TabLayoutMediator(binding.tabLayout, binding.viewpager2) { tab, pos ->
-            tab.text = tabTextList[pos]
+            tab.text = getString(tabTextList[pos])
         }.attach()
     }
 
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                     // CALL_PHONE 권한이 거부된 경우, Toast 메시지 표시 및 프래그먼트 실행
                     Toast.makeText(
                         this,
-                        "일부 기능을 사용할 수 없을 수 있습니다.",
+                        R.string.main_call_request,
                         Toast.LENGTH_SHORT
                     ).show()
                     initViewPager()
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                     // READ_CONTACTS 권한이 거부된 경우, Toast 메시지 표시 및 initViewPager 실행
                     Toast.makeText(
                         this,
-                        "휴대전화가 백업되지 않습니다.",
+                        R.string.main_read_request,
                         Toast.LENGTH_SHORT
                     ).show()
                     initViewPager()
